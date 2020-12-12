@@ -31,7 +31,13 @@ To test out py2c immediatly, cd into examples. From there, test out the hello wo
 
 ## Troubleshooting:
 
-On the event a python file does not compile, carefully read the error message and from which program the error message originates. Often times, the c linker will throw a bunch of errors if a specific library is not linked. For now, the only remedy is to manually edit the py2c shell file to include the linker command for the specific library.
+On the event a python file does not compile, carefully read the error message and from which program the error message originates. Often times, the C linker will throw a bunch of errors if a specific library is not linked. Sometimes, the issue will be with linking the python library to the compiled C program. You can see if this is the case by passing `-l` or `-lpython` to py2c. If an error is encountered, py2c will tell you to use the `-l` or `-lpython` flags. However, this message will apear if any error whatsoever is encountered.
+
+If the linker throws an error, pass the `-l` or `-lpython` flags to py2c:
+	
+    `py2c -o file file.py -l`
+
+	`py2c -o file file.py -lpython`
 
 If you cannot solve your issue, feel free to open an issue on the github [issue board](https://github.com/Raniconduh/py2c/issues)
 
