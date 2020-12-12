@@ -11,7 +11,7 @@ py2c does not require installation as it is a simple shell script. However, py2c
 
 To install Cython, python must first be installed. Afterwards, Cython can be installed with the command `pip install Cython`.
 
-To use py2c out of its git directory, copy it to a directory in your `PATH`. Preferably copy it without the file extension `.sh` to call py2c as `py2c ..` as opposed to `py2c.sh ...`.
+To use py2c out of its git directory, copy it to a directory in your `PATH`. Preferably copy it without the file extension `.sh` to call py2c as `py2c ...` as opposed to `py2c.sh ...`.
 
 
 ## Usage:
