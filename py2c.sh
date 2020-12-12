@@ -69,7 +69,7 @@ elif [ $python_type = "-3" ]; then
 fi
 
 
-cc -Os $CFLAGS -o $output_file $c_file_name -lpython$python_version $LIBS -fPIE
+cc -Os $CFLAGS -fPIE -o $output_file $c_file_name $LIBS -lpython$python_version
 
 if [ $keep = 0 ]; then
 	rm $c_file_name
