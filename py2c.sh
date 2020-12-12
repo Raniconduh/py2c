@@ -8,7 +8,8 @@ help() {
 	echo "  -o, --output-file <filename>		Specify name of output file"
 	echo "  -2, --python2				Use python2 standards"
 	echo "  -3, --python3				Use python3 standards"
-	echo "  -k, --keep				Do not delete the generated C or C++ file"	
+	echo "  -k, --keep				Do not delete the generated C or C++ file"
+	echo "  -l, -lpython			Specify the -lpython flag for the C compiler"
 	exit $1
 }
 
@@ -24,6 +25,7 @@ output_file="a.out"
 python_type="-3"
 python_version="0"
 keep=0
+link_python=0
 
 while test $# -gt 0; do
 	case "$1" in
@@ -44,6 +46,9 @@ while test $# -gt 0; do
 			;;
 		*.py)
 			file=$1
+			;;
+		-l|-lpython)
+			link_python=1
 			;;
 	esac
 	shift
@@ -69,7 +74,21 @@ elif [ $python_type = "-3" ]; then
 fi
 
 
-cc -Os $CFLAGS -fPIE -o $output_file $c_file_name $LIBS -lpython$python_version
+if [ $link_python = 1 ]; then
+	cc -Os $CFLAGS -fPIE -o $output_file $c_file_name $LIBS -lpython$python_version
+elif [ $link_python = 0 ]; then
+	cc -Os $CFLAGS -fPIE -o $output_file $c_file_name $LIBS
+fi
+
+if [ $? = 1 ]; then
+	echo ""
+	echo "\033[31m---------\033[0m"
+	echo ""
+	echo "If linker failed, try passing the -l or -lpython flag to py2c. e.g."
+	echo "  py2c -o file file.py -lpython"
+	echo "  py2c -o file file.py -l"
+	echo ""
+fi
 
 if [ $keep = 0 ]; then
 	rm $c_file_name
