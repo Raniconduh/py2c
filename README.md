@@ -35,9 +35,9 @@ On the event a python file does not compile, carefully read the error message an
 
 If the linker throws an error, pass the `-l` or `-lpython` flags to py2c:
 	
-    `py2c -o file file.py -l`
+	py2c -o file file.py -l
 
-	`py2c -o file file.py -lpython`
+	py2c -o file file.py -lpython
 
 If you cannot solve your issue, feel free to open an issue on the github [issue board](https://github.com/Raniconduh/py2c/issues)
 
