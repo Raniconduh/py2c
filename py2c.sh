@@ -65,12 +65,12 @@ fi
 
 if [ $python_type = "-2" ]; then
 	python_version=$(python2 -c 'import platform; print(platform.python_version());' | cut -c 1-3)
-	CFLAGS=$(python2-config --cflags)
-	LIBS=$(python2-config --libs)
+	CFLAGS=$(pkg-config --cflags python2)
+	LIBS=$(pkg-config --libs python2)
 elif [ $python_type = "-3" ]; then
 	python_version=$(python3 -c 'import platform; print(platform.python_version());' | cut -c 1-3)
-	CFLAGS=$(python3-config --cflags)
-	LIBS=$(python3-config --libs)
+	CFLAGS=$(pkg-config --cflags python3)
+	LIBS=$(pkg-config --libs python3)
 fi
 
 
