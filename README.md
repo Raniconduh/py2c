@@ -28,6 +28,7 @@ If you need any help with the command line options, run `py2c -h` or `py2c --hel
 
 To test out py2c immediatly, cd into examples. From there, test out the hello world program by executing `py2c -o helloworld helloworld.py`. Rn the compiled file with `./helloworld`, et voila.
 
+py2c also allows for passing of arguments to the C compiler. For instance, to compile a static binary, one could run `py2c -o file file.c -g -static`. The `-g` flag specifies that all arguments passed after it will be passed to the C compiler. For instance, the command `py2c -o file file.c -g arg1 -arg2 --arg3` will pass the arguments `arg1 -arg2 --arg3` to the C compiler.
 
 ## Troubleshooting:
 
