@@ -10,6 +10,7 @@ help() {
 	echo "  -3, --python3				Use python3 standards"
 	echo "  -k, --keep				Do not delete the generated C or C++ file"
 	echo "  -l, -lpython			Specify the -lpython flag for the C compiler"
+	echo "  -g				pass all arguments after '-g' flag to the C compiler"
 	exit $1
 }
 
@@ -19,6 +20,7 @@ if [ $# -lt 1 ]; then
 	help 1
 fi
 
+CFLAGS=""
 
 file=""
 output_file="a.out"
@@ -26,6 +28,7 @@ python_type="-3"
 python_version="0"
 keep=0
 link_python=0
+
 
 while test $# -gt 0; do
 	case "$1" in
@@ -50,9 +53,17 @@ while test $# -gt 0; do
 		-l|-lpython)
 			link_python=1
 			;;
+		-g)
+			while test $# -gt 0; do
+				shift
+				CFLAGS=$CFLAGS" "$1
+			done
+			break
+			;;
 	esac
 	shift
 done
+
 
 c_file_name=$file".c"
 cython --embed -o $c_file_name $python_type $file
@@ -65,11 +76,11 @@ fi
 
 if [ $python_type = "-2" ]; then
 	python_version=$(python2 -c 'import platform; print(platform.python_version());' | cut -c 1-3)
-	CFLAGS=$(pkg-config --cflags python2)
+	CFLAGS=$CFLAGS" "$(pkg-config --cflags python2)
 	LIBS=$(pkg-config --libs python2)
 elif [ $python_type = "-3" ]; then
 	python_version=$(python3 -c 'import platform; print(platform.python_version());' | cut -c 1-3)
-	CFLAGS=$(pkg-config --cflags python3)
+	CFLAGS=$CFLAGS" "$(pkg-config --cflags python3)
 	LIBS=$(pkg-config --libs python3)
 fi
 
